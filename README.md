@@ -8,9 +8,13 @@ Daily Log Backups
 
 
 HOW TO EXECUTE THIS SAMPLE APPLICATION
+
 1]clone this repository
+
 2]install ant
+
 3]go to application folder type ant
+
 
 This sample application is made on Eclipse IDE hence can be directly imported too.
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="logger" default="archive" basedir=".">
+
+	<description>
+          Logger
+    </description>
+
+	<property file="build.properties" />
+	
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+	  <classpath>
+	    <pathelement location="lib/ant-contrib-1.0b3.jar"/>
+	  </classpath>
+	</taskdef>
+
+
+
+	<!-- ==================== Clean Target ==================================== -->
+	<!--
+      The "clean" target deletes any previous "build" and "dist" directory,
+      so that you can be ensured the application can be built from scratch.
+    -->
+	<target name="clean" description="Delete old build and dist directories">
+		<delete dir="${dist.home}" />
+		<delete dir="${build.home}" />
+		<delete dir="${bin.home}" />
+	</target>
+
+	<!-- ==================== Init Target ================================== -->
+	<!--
+      The "init" target is used to create the "build" destination directory,
+      Normally, this task is executed indirectly when needed.
+    -->
+	<target name="init" depends="clean" description="Create build directory">
+		<mkdir dir="${build.home}" />
+	</target>
+
+	<!-- ==================== Compile Target ================================== -->
+	<!--
+      The "compile" target transforms source files (from your "src" directory)
+      into class files in the appropriate location in the build directory.
+      This example assumes that you will be including your classes in an
+      unpacked directory hierarchy under "/WEB-INF/classes".
+    -->
+	<target name="compile" depends="init" description="Compile Java sources">
+		<javac srcdir="${source.home}" destdir="${build.home}" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" source="1.6" target="1.6">
+			<classpath>
+				<path>
+					<fileset dir="${lib.home}" />
+				</path>
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- ==================== Build Target ================================== -->
+	<!--
+      The "build" target copies all non class files to build directory
+    -->
+	<target name="build" depends="compile" description="Copies all non Java classes to build directoy">
+		<!-- copy the files appropriately -->
+		<copy file="${source.home}/log4j.xml" tofile="${build.home}/log4j.xml" />
+		
+	</target>
+
+	<!-- ==================== Archive Target ================================== -->
+	<!--
+      The "archive" target create a binary archive of all files in build.home
+    -->
+	<target name="archive" depends="build" description="Create binary archive of all files in dist.home">
+		<mkdir dir="${dist.home}" />
+		<jar jarfile="${dist.home}/${app.name}.jar" basedir="${build.home}" manifest="${manifest.home}/MANIFEST.MF" />
+
+		<!-- copy all the jar files -->
+		<copy todir="${dist.home}">
+			<fileset dir="${lib.home}" excludes="CVS,**/*.classes" />
+		</copy>		
+						
+	</target>
+</project>

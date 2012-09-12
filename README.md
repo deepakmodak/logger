@@ -6,8 +6,15 @@ Daily Log Backups
 * Two Appenders are used to display logs on console and write logs in file.
 * ConversionPattern will allow to have desired format of the log roll.
 
-Console:
 
+HOW TO EXECUTE THIS SAMPLE APPLICATION
+1]clone this repository
+2]install ant
+3]go to application folder type ant
+
+This sample application is made on Eclipse IDE hence can be directly imported too.
+
+Console:
 log4j has ConsoleAppender to display logs [info,error etc] on console 
 
 	<appender name="default" class="org.apache.log4j.ConsoleAppender">	
